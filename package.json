@@ -1,7 +1,7 @@
 {
   "name": "mobx-fields",
   "version": "0.0.1",
-  "description": "",
+  "description": "Mobx form fields builder - create simple to complex form with ease",
   "main": "lib/index.js",
   "scripts": {
     "build": "npm run build:clean && tsc",
@@ -13,8 +13,8 @@
     "lint": "yarn prettify:check && yarn tslint",
     "test": "jest"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Adrien Ogor <adrien@iamasoft.com>",
+  "license": "MIT",
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint"
