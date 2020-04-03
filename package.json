@@ -1,0 +1,45 @@
+{
+  "name": "mobx-fields",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "npm run build:clean && tsc",
+    "build:clean": "rimraf lib && rimraf build",
+    "build:watch": "tsc --watch",
+    "prettify": "prettier --write \"src/**/*.{js,ts}\"",
+    "prettify:check": "prettier -l \"src/**/*.ts\"",
+    "tslint": "tslint './src/**/*.{ts,tsx}' --project ./tsconfig.json",
+    "lint": "yarn prettify:check && yarn tslint",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "dependencies": {
+    "fast-deep-equal": "^3.1.1",
+    "validator": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.1.5",
+    "@types/validator": "^12.0.1",
+    "date-fns": "^2.7.0",
+    "husky": "^4.2.3",
+    "jest": "^25.2.7",
+    "mobx": "^5.14.0",
+    "prettier": "^2.0.2",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^25.3.0",
+    "ts-node": "^8.8.1",
+    "tslint": "^6.1.1",
+    "typescript": "^3.8.3"
+  },
+  "peerDependencies": {
+    "date-fns": "2",
+    "mobx": ">=5"
+  }
+}
