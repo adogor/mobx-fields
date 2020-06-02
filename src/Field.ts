@@ -79,6 +79,7 @@ export default class Field<TValue, TInputValue = TValue>
 
   _dispose?: IReactionDisposer;
 
+  @action("FIELD_RESET")
   reset({ untouched = false, defaultValue = false }: ResetOpts = {}) {
     if (defaultValue) {
       this.initValue = this.defaultValue;
