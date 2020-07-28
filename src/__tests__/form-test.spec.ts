@@ -153,6 +153,20 @@ describe("Simple field", () => {
     expect(fieldA.defaultValue).toEqual("value1");
     expect(fieldA.initValue).toEqual("value1");
   });
+
+  it("Using onInputChange keep interacted property as false, unlike setValue", () => {
+    const simpleField = fb.field("value1");
+    expect(simpleField.value).toEqual("value1");
+    expect(simpleField.interacted).toBeFalsy();
+
+    simpleField.onInputChange(null, "newValue");
+    expect(simpleField.value).toEqual("newValue");
+    expect(simpleField.interacted).toBeFalsy();
+
+    simpleField.setValue("NewValue interacted");
+    expect(simpleField.value).toEqual("NewValue interacted");
+    expect(simpleField.interacted).toBeTruthy();
+  });
 });
 
 describe("FieldsArray", () => {
@@ -195,7 +209,7 @@ describe("FieldsArray", () => {
 
     simpleArray.reset();
     expect(simpleArray.pristine).toBeTruthy();
-    expect(simpleArray.interacted).toBeTruthy();
+    expect(simpleArray.interacted).toBeFalsy();
 
     simpleArray.reset({ untouched: true });
     expect(simpleArray.interacted).toBeFalsy();
