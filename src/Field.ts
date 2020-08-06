@@ -134,7 +134,7 @@ export default class Field<TValue, TInputValue = TValue>
     }
     const parsedValue = this.parser ? this.parser(value) : value;
     if (parsedValue !== this._value) {
-      this.setValue(parsedValue as TValue);
+      this.setValue(parsedValue as TValue, { interract: false });
     }
   };
 
