@@ -7,6 +7,7 @@ import {
   observable,
   reaction,
 } from "mobx";
+import { isPromise, Nullable } from "./utils";
 import {
   defaultValidationContext,
   ErrorMessage,
@@ -14,7 +15,6 @@ import {
   ValidationFunction,
   ValidationObj,
 } from "./validation";
-import { Nullable, isPromise } from "./utils";
 
 export interface FieldType<TValue> {
   markAsTouched: () => void;
@@ -124,7 +124,7 @@ export default class Field<TValue, TInputValue = TValue>
     }
     this._value = val;
     if (isInitValue) {
-      this.initValue = val;
+      this.initValue = this.value;
     }
   };
 

@@ -167,6 +167,24 @@ describe("Simple field", () => {
     expect(simpleField.value).toEqual("NewValue interacted");
     expect(simpleField.interacted).toBeTruthy();
   });
+
+  it("we can put arrays", () => {
+    const simpleField = fb.field([
+      { id: "react", label: "react" },
+      { id: "react1", label: "react1" },
+    ]);
+    expect(simpleField.pristine).toBeTruthy();
+    simpleField.setValue([
+      { id: "react", label: "react" },
+      { id: "react2", label: "react2" },
+    ]);
+    expect(simpleField.pristine).toBeFalsy();
+    simpleField.setValue([
+      { id: "react", label: "react" },
+      { id: "react1", label: "react1" },
+    ]);
+    expect(simpleField.pristine).toBeTruthy();
+  });
 });
 
 describe("FieldsArray", () => {
@@ -240,6 +258,24 @@ describe("FieldsArray", () => {
     simpleArray.reset();
 
     expect(simpleArray.value).toEqual([]);
+  });
+
+  it("we can define builder for array", () => {
+    const simpleField = fb.field("value1");
+    const simpleArray = fb.array([simpleField], {
+      builder: (val: string) => fb.field(val),
+    });
+
+    expect(simpleArray.value).toEqual(["value1"]);
+
+    simpleArray.setValue(["val1", "val2"]);
+
+    expect(simpleArray.value).toEqual(["val1", "val2"]);
+
+    simpleArray.reset();
+
+    expect(simpleArray.value).toEqual(["value1"]);
+    expect(simpleArray.pristine).toBeTruthy();
   });
 });
 
@@ -363,6 +399,7 @@ describe("FieldsObject", () => {
     expect(myForm.value).toEqual(initData);
     expect(myForm.defaultValue).toEqual(expectedDefaultValue);
     expect(myForm.initValue).toEqual(initData);
+    expect(myForm.pristine).toBeTruthy();
 
     myForm.fields.c.fields.c1.setValue("mic1");
 

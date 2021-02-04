@@ -35,7 +35,7 @@ class FieldBuilder {
   array<
     TField extends FieldType<FieldsArrayData<TField>>,
     TData = FieldsArrayData<TField>
-  >(initValue: TField[], obj?: FieldsArrayOpts<TData>) {
+  >(initValue: TField[], obj?: FieldsArrayOpts<TData, TField>) {
     return new FieldsArray(initValue, obj);
   }
 }

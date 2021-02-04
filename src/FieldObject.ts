@@ -97,7 +97,7 @@ export default class FieldsObject<TFields>
       }
     });
     if (isInitValue) {
-      this.initValue = newData;
+      this.initValue = this.value;
     }
   }
 

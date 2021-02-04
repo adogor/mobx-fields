@@ -9,8 +9,9 @@ export type FieldsArrayData<TField> = TField extends FieldType<infer U>
 
 export type FieldsArrayValidator<T> = (val: T[]) => ValidationObj;
 
-export type FieldsArrayOpts<TData> = {
+export type FieldsArrayOpts<TData, TField> = {
   validate?: FieldsArrayValidator<TData | null>;
+  builder?: (data: TData, opts: SetValueOpts) => TField;
 };
 
 export default class FieldsArray<
@@ -26,11 +27,14 @@ export default class FieldsArray<
 
   validate?: FieldsArrayValidator<TData | null>;
 
+  builder?: (data: TData, opts: SetValueOpts) => TField;
+
   constructor(
     defaultValue: TField[],
-    { validate }: FieldsArrayOpts<TData> = {}
+    { validate, builder }: FieldsArrayOpts<TData, TField> = {}
   ) {
     this.validate = validate;
+    this.builder = builder;
     this.fields = observable.array(defaultValue, { deep: false });
     this.defaultValue = this.value;
     this.initValue = this.value;
@@ -71,16 +75,26 @@ export default class FieldsArray<
     this.fields.splice(data.length, this.fields.length - data.length);
 
     // Set fields values to data values
-    data.forEach((dataField, i) =>
-      // FIXME: if fields[i] is undefined it will throw an error, we need to have a builder function
-      this.fields[i].setValue(dataField as FieldsArrayData<TField>, {
-        interract,
-        isInitValue,
-      })
-    );
+    data.forEach((dataField, i) => {
+      if (this.fields[i]) {
+        this.fields[i].setValue(dataField as FieldsArrayData<TField>, {
+          interract,
+          isInitValue,
+        });
+      } else if (this.builder) {
+        this.fields.push(
+          this.builder(dataField as FieldsArrayData<TField>, {
+            interract,
+            isInitValue,
+          })
+        );
+      } else {
+        throw Error("No builder defined");
+      }
+    });
 
     if (isInitValue) {
-      this.initValue = data;
+      this.initValue = this.value;
     }
   }
 
