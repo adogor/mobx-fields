@@ -1,6 +1,6 @@
 {
   "name": "mobx-fields",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Mobx form fields builder - create simple to complex form with ease",
   "main": "lib/index.js",
   "scripts": {
