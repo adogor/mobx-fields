@@ -7,6 +7,7 @@ import {
   next,
   error,
   stop,
+  buildError,
 } from "../validation";
 import { Nullable } from "../utils";
 
@@ -16,7 +17,9 @@ export const isEmail = (code?: string) => (
   const isValid = !context.value || isEmailValidator(context.value);
   return isValid
     ? next()
-    : error(code || "validation.wrong-email", { label: context.label });
+    : error(
+        buildError(code || "validation.wrong-email", { label: context.label })
+      );
 };
 
 export const isRequired = (code?: string) => <T>(
@@ -30,7 +33,9 @@ export const isRequired = (code?: string) => <T>(
   }
   return isValid
     ? next()
-    : error(code || "validation.required", { label: context.label });
+    : error(
+        buildError(code || "validation.required", { label: context.label })
+      );
 };
 
 export const maxLength = (maxLength: number, code?: string) => (
@@ -42,10 +47,12 @@ export const maxLength = (maxLength: number, code?: string) => (
   const isValid = !context.value || context.value.length <= maxLength;
   return isValid
     ? next()
-    : error(code || "validation.max-length", {
-        label: context.label,
-        maxLength,
-      });
+    : error(
+        buildError(code || "validation.max-length", {
+          label: context.label,
+          maxLength,
+        })
+      );
 };
 
 // export const isInt = (message: string, { max, min }: { max?: number; min?: number }) => (
@@ -73,10 +80,12 @@ export const isPositiveNumber = (code?: string) => (
   const isValid = context.value > 0;
   return isValid
     ? next()
-    : error(code || "validation.not-positive-number", {
-        label: context.label,
-        maxLength,
-      });
+    : error(
+        buildError(code || "validation.not-positive-number", {
+          label: context.label,
+          maxLength,
+        })
+      );
 };
 
 export const isPostalCode = (code?: string) => (
@@ -88,10 +97,12 @@ export const isPostalCode = (code?: string) => (
   const isValid = isPostalCodeValidator(context.value, "FR");
   return isValid
     ? next()
-    : error(code || "validation.not-postal-code", {
-        label: context.label,
-        maxLength,
-      });
+    : error(
+        buildError(code || "validation.not-postal-code", {
+          label: context.label,
+          maxLength,
+        })
+      );
 };
 
 export const isPhoneNumber = (code?: string) => (
@@ -103,10 +114,12 @@ export const isPhoneNumber = (code?: string) => (
   const isValid = isMobilePhone(context.value, "fr-FR");
   return isValid
     ? next()
-    : error(code || "validation.not-phone-number", {
-        label: context.label,
-        maxLength,
-      });
+    : error(
+        buildError(code || "validation.not-phone-number", {
+          label: context.label,
+          maxLength,
+        })
+      );
 };
 
 // export function isDate(newValue, label) {

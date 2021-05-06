@@ -70,8 +70,11 @@ describe("Simple field", () => {
       validate: async (context: ValidationContext<Nullable<string>>) => {
         await sleep(); // simulate async operation
         if (context.value === "adogor") {
-          return error("validation.username-not-available", {
-            label: context.label,
+          return error({
+            code: "validation.username-not-available",
+            params: {
+              label: context.label,
+            },
           });
         } else {
           return next();

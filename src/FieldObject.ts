@@ -151,6 +151,6 @@ export default class FieldsObject<TFields>
 
   @computed
   get errorMessage() {
-    return this.validation.message || "";
+    return this.validation?.message;
   }
 }

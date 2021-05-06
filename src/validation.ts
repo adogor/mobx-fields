@@ -30,29 +30,21 @@ export function defaultValidationContext<TValue>(
 
 export const next = (): ValidationObj => ({ valid: true });
 
-export const error = (code: string, params: {}): ValidationObj => ({
+export const error = (message: ErrorMessage): ValidationObj => ({
   valid: false,
-  message: {
-    code,
-    params,
-  },
+  message,
 });
 
 export const stop = (): ValidationObj => ({ stop: true, valid: true });
 
-export interface I18nMessage {
+export interface ErrorMessage {
   code: string;
   params: {};
 }
 
-export type ErrorMessage = string | I18nMessage;
-
-// export type ErrorTranslator = (error: ErrorMessage) => string;
-
-// function defaultErrorTranslator(error: ErrorMessage) {
-//   if (typeof error === "string") {
-//     return error;
-//   } else {
-//     return error[0];
-//   }
-// }
+export function buildError(code: string, params: {}): ErrorMessage {
+  return {
+    code,
+    params,
+  };
+}

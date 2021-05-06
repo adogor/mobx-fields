@@ -144,6 +144,6 @@ export default class FieldsArray<
 
   @computed
   get errorMessage() {
-    return this.validation.message || "";
+    return this.validation?.message;
   }
 }

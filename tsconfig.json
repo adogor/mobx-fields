@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "lib": ["es2018", "esnext", "es6", "dom"],
     "baseUrl": ".",
     "outDir": "./lib",
     "rootDir": "./src",
     "module": "commonjs",
-    "declaration": true,
-    "sourceMap": true,
+    "declaration": false,
+    "sourceMap": false,
     "jsx": "react",
     "moduleResolution": "node",
     "strict": true,

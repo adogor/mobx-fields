@@ -25,7 +25,7 @@ export interface FieldType<TValue> {
   readonly isValid: boolean;
   readonly interacted: boolean;
   readonly pristine: boolean;
-  readonly errorMessage: ErrorMessage;
+  readonly errorMessage?: ErrorMessage;
   readonly validation: ValidationObj;
 }
 
@@ -151,9 +151,9 @@ export default class Field<TValue, TInputValue = TValue>
   @computed
   get errorMessage() {
     if (!this._interacted || !this._validation) {
-      return "";
+      return undefined;
     }
-    return this._validation.message || "";
+    return this._validation?.message;
   }
 
   @computed
