@@ -39,10 +39,10 @@ export const stop = (): ValidationObj => ({ stop: true, valid: true });
 
 export interface ErrorMessage {
   code: string;
-  params: {};
+  params?: {};
 }
 
-export function buildError(code: string, params: {}): ErrorMessage {
+export function buildError(code: string, params?: {}): ErrorMessage {
   return {
     code,
     params,
