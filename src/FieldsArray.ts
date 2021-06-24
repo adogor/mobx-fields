@@ -17,7 +17,8 @@ export type FieldsArrayOpts<TData, TField> = {
 export default class FieldsArray<
   TField extends FieldType<FieldsArrayData<TField>>,
   TData = FieldsArrayData<TField>
-> implements FieldType<(TData | null)[]> {
+> implements FieldType<(TData | null)[]>
+{
   @observable fields: TField[];
 
   defaultValue: (TData | null)[];

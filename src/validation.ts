@@ -2,6 +2,7 @@ export interface ValidationObj {
   valid: boolean;
   message?: ErrorMessage;
   stop?: boolean;
+  data?: any;
 }
 
 export interface ValidationContext<TValue> {
@@ -28,14 +29,19 @@ export function defaultValidationContext<TValue>(
   };
 }
 
-export const next = (): ValidationObj => ({ valid: true });
+export const next = (data?: any): ValidationObj => ({ valid: true, data });
 
-export const error = (message: ErrorMessage): ValidationObj => ({
+export const error = (message: ErrorMessage, data?: any): ValidationObj => ({
   valid: false,
   message,
+  data,
 });
 
-export const stop = (): ValidationObj => ({ stop: true, valid: true });
+export const stop = (data?: any): ValidationObj => ({
+  stop: true,
+  valid: true,
+  data,
+});
 
 export interface ErrorMessage {
   code: string;

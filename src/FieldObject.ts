@@ -32,7 +32,8 @@ export type FieldsObjectOpts<TFields> = {
 };
 
 export default class FieldsObject<TFields>
-  implements FieldType<FieldsObjectData<TFields>> {
+  implements FieldType<FieldsObjectData<TFields>>
+{
   @observable fields: TFields;
 
   defaultValue: FieldsObjectData<TFields>;

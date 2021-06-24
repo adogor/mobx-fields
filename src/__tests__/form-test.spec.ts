@@ -100,6 +100,19 @@ describe("Simple field", () => {
     expect(simpleField.isValid).toBeTruthy();
   });
 
+  it("We get validation data", async () => {
+    const simpleField = fb.field("initvalue", {
+      validate: (c) => {
+        return error({ code: "error" }, { strength: 2 });
+      },
+    });
+    expect(simpleField.value).toEqual("initvalue");
+    simpleField.markAsTouched();
+    expect(simpleField.isValid).toBeFalsy();
+    expect(simpleField.errorMessage).toEqual({ code: "error" });
+    expect(simpleField.validation.data).toEqual({ strength: 2 });
+  });
+
   it("We can provide formaters and parsers", async () => {
     const simpleField = fb.field("initvalue");
     expect(simpleField.inputValue).toEqual("initvalue");

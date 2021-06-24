@@ -51,7 +51,8 @@ export interface ResetOpts {
   defaultValue?: boolean;
 }
 export default class Field<TValue, TInputValue = TValue>
-  implements FieldType<Nullable<TValue>> {
+  implements FieldType<Nullable<TValue>>
+{
   @observable
   _value: Nullable<TValue> = null;
   @observable
