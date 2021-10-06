@@ -1,6 +1,6 @@
+import { fb, Field, getInputFieldProps, isEmail } from "../index";
 import { Nullable, numberFormater, numberParser } from "../utils";
-import { fb, getInputFieldProps, isEmail } from "../index";
-import { next, stop, ValidationContext, error } from "../validation";
+import { error, next, stop, ValidationContext } from "../validation";
 import { isRequired } from "../validators";
 
 async function sleep() {}
@@ -219,12 +219,34 @@ describe("FieldsArray", () => {
     expect(simpleArray.pristine).toBeTruthy();
   });
 
-  it("Can have complex fields types", () => {
+  it.only("Can have complex fields types", () => {
     const simpleField = fb.field("textField");
     const objectField = fb.obj({ a: simpleField });
     const simpleArray = fb.array([objectField]);
     expect(simpleArray.fields[0].fields.a.value).toEqual("textField");
     expect(simpleArray.value).toEqual([{ a: "textField" }]);
+
+    expect(simpleArray.pristine).toBeTruthy();
+    simpleField.setValue("modified");
+    expect(simpleArray.pristine).toBeFalsy();
+  });
+
+  it.skip("Can have Class object types", () => {
+    class CustomObject {
+      propA: string = "a";
+      propB: string = "b";
+    }
+    const a = new CustomObject();
+
+    const simpleArray = fb.array<Field<CustomObject>>([fb.field(a)]);
+    expect(simpleArray.pristine).toBeTruthy();
+    expect(simpleArray.fields[0].value?.propA).toEqual("a");
+    expect(simpleArray.value).toEqual([{ propA: "a", propB: "b" }]);
+    a.propA = "a1";
+    expect(simpleArray.value).toEqual([{ propA: "a1", propB: "b" }]);
+
+    //FIXME should be false
+    expect(simpleArray.pristine).toBeFalsy();
   });
 
   it("Can have complex fields types with custom parsers", () => {
